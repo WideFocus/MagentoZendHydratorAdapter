@@ -11,6 +11,12 @@
             "email": "ashoka@widefocus.net"
         }
     ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://repo.magento.com/"
+        }
+    ],
     "require": {
         "php": "^7.0",
         "zendframework/zend-stdlib": "^2.4",
