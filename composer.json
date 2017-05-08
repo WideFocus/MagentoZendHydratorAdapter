@@ -1,0 +1,32 @@
+{
+    "name": "widefocus/magento-zend-hydrator-adapter",
+    "description": "A bridge to use the Zend Hydrator implementation instead of the Magento2 implementation.",
+    "type": "library",
+    "license": "MIT",
+    "prefer-stable": true,
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "Ashoka de Wit",
+            "email": "ashoka@widefocus.net"
+        }
+    ],
+    "require": {
+        "php": "^7.0",
+        "zendframework/zend-stdlib": "^2.4",
+        "magento/framework": "^100.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "@stable"
+    },
+    "autoload": {
+        "psr-4": {
+            "WideFocus\\Magento\\ZendHydratorAdapter\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "WideFocus\\Magento\\ZendHydratorAdapter\\Tests\\": "tests"
+        }
+    }
+}
