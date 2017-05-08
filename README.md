@@ -103,7 +103,6 @@ use Foo\Model\FooModel;
 
 class Save
 {
-    /** @var HydratorPool */
     private $hydratorPool;
     
     public function __construct(HydratorPool $hydratorPool)
@@ -116,7 +115,7 @@ class Save
         $model = new FooModel();
         $this->hydratorPool
             ->getHydrator(FooModelInterface::class)
-            ->hydrate(['date' => '2025-12-31 23:59:59']);
+            ->hydrate($model, ['date' => '2025-12-31 23:59:59']);
     }
 }
 ```
