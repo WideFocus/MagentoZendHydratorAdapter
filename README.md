@@ -67,7 +67,7 @@ DI configuration (etc/di.xml)
     </virtualType>
     
     <virtualType name="FooModelHydrator"
-                 type="WideFocus\Magento\ZendHydratorAdapter\ZendReflectionHydratorAdapter">
+                 type="WideFocus\Magento\ZendHydratorAdapter\ReflectionHydratorAdapter">
         <arguments>
             <argument name="strategies" xsi:type="array">
                 <item name="date"
