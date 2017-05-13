@@ -39,37 +39,63 @@ class ZendHydratorAdapterTest extends TestCase
      * @return void
      *
      * @covers ::__construct
+     * @covers ::setStrategies
+     * @covers ::setFilters
+     * @covers ::expandNames
      */
     public function testParameters()
     {
         $strategies = [
-            'foo' => $this->createMock(StrategyInterface::class),
+            'foo_name' => $this->createMock(StrategyInterface::class),
             'bar' => $this->createMock(StrategyInterface::class)
         ];
 
         $filters = [
-            'foo' => $this->createMock(FilterInterface::class),
+            'fooName' => $this->createMock(FilterInterface::class),
             'bar' => $this->createMock(FilterInterface::class)
         ];
 
         $namingStrategy = $this->createMock(NamingStrategyInterface::class);
+        $namingStrategy
+            ->expects($this->any())
+            ->method('extract')
+            ->willReturnMap(
+                [
+                    ['foo_name', 'foo_name'],
+                    ['fooName', 'foo_name'],
+                    ['bar', 'bar']
+                ]
+            );
+
+        $namingStrategy
+            ->expects($this->any())
+            ->method('hydrate')
+            ->willReturnMap(
+                [
+                    ['foo_name', 'fooName'],
+                    ['fooName', 'fooName'],
+                    ['bar', 'bar']
+                ]
+            );
 
         $zendHydrator = $this->createMock(Reflection::class);
         $zendHydrator
-            ->expects($this->exactly(2))
+            ->expects($this->exactly(3))
             ->method('addStrategy')
             ->withConsecutive(
-                ['foo', $strategies['foo']],
-                ['bar', $strategies['bar']]
+                ['foo_name', $strategies['foo_name']],
+                ['bar', $strategies['bar']],
+                ['fooName', $strategies['foo_name']]
             )
             ->willReturnSelf();
 
         $zendHydrator
-            ->expects($this->exactly(2))
+            ->expects($this->exactly(3))
             ->method('addFilter')
             ->withConsecutive(
-                ['foo', $filters['foo']],
-                ['bar', $filters['bar']]
+                ['foo_name', $filters['fooName']],
+                ['bar', $filters['bar']],
+                ['fooName', $filters['fooName']]
             )
             ->willReturnSelf();
 
