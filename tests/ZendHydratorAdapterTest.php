@@ -9,7 +9,11 @@ namespace WideFocus\Magento\ZendHydratorAdapter\Tests;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use WideFocus\Magento\ZendHydratorAdapter\ZendHydratorAdapter;
+use Zend\Stdlib\Hydrator\Filter\FilterInterface;
 use Zend\Stdlib\Hydrator\HydratorInterface;
+use Zend\Stdlib\Hydrator\NamingStrategy\NamingStrategyInterface;
+use Zend\Stdlib\Hydrator\Reflection;
+use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 
 /**
  * @coversDefaultClass \WideFocus\Magento\ZendHydratorAdapter\ZendHydratorAdapter
@@ -28,6 +32,58 @@ class ZendHydratorAdapterTest extends TestCase
             new ZendHydratorAdapter(
                 $this->createMock(HydratorInterface::class)
             )
+        );
+    }
+
+    /**
+     * @return void
+     *
+     * @covers ::__construct
+     */
+    public function testParameters()
+    {
+        $strategies = [
+            'foo' => $this->createMock(StrategyInterface::class),
+            'bar' => $this->createMock(StrategyInterface::class)
+        ];
+
+        $filters = [
+            'foo' => $this->createMock(FilterInterface::class),
+            'bar' => $this->createMock(FilterInterface::class)
+        ];
+
+        $namingStrategy = $this->createMock(NamingStrategyInterface::class);
+
+        $zendHydrator = $this->createMock(Reflection::class);
+        $zendHydrator
+            ->expects($this->exactly(2))
+            ->method('addStrategy')
+            ->withConsecutive(
+                ['foo', $strategies['foo']],
+                ['bar', $strategies['bar']]
+            )
+            ->willReturnSelf();
+
+        $zendHydrator
+            ->expects($this->exactly(2))
+            ->method('addFilter')
+            ->withConsecutive(
+                ['foo', $filters['foo']],
+                ['bar', $filters['bar']]
+            )
+            ->willReturnSelf();
+
+        $zendHydrator
+            ->expects($this->once())
+            ->method('setNamingStrategy')
+            ->with($namingStrategy)
+            ->willReturnSelf();
+
+        new ZendHydratorAdapter(
+            $zendHydrator,
+            $strategies,
+            $filters,
+            $namingStrategy
         );
     }
 
