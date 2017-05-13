@@ -60,7 +60,7 @@ class ZendHydratorAdapter implements HydratorInterface
             || $zendHydrator instanceof StdNamingStrategyEnabledInterface
         ) {
             $zendHydrator->setNamingStrategy(
-                $namingStrategy ?: new UnderscoreNamingStrategy()
+                $namingStrategy ?? new UnderscoreNamingStrategy()
             );
         }
 
