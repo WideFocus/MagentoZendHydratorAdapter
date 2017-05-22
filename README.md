@@ -28,17 +28,6 @@ use Foo\Api\Data\FooModelInterface;
 class FooModel implements FooModelInterface
 {
     private $date;
-    private $name;
-    
-    public function setName(string $name)
-    {
-        $this->name = $name;
-    }
-    
-    public function getName(): string
-    {
-        return $this->name;
-    }
     
     public function setDate(DateTimeInterface $date)
     {
